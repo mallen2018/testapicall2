@@ -23,8 +23,10 @@ $("#find-comic").on("click", function (event) {
 
 			var parseresponse = JSON.parse(response)
 
-			var hotmess = $("<p>").text(parseresponse.Product[1].DetailsURL);
+			var hotmess = $("<a href>").text(parseresponse.Product[1].DetailsURL);
 			console.log(parseresponse);
 			$("#hotmessdisplay").prepend(hotmess);
 		});
-});
+	});
+
+		
