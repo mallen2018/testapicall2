@@ -2,7 +2,7 @@ $("#find-comic").on("click", function (event) {
 
 	event.preventDefault();
 	var comic = $("#searchTerm").val().trim();
-	var queryURL = "http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&callbackname=callback&appid=BrandenH-MarvelSi-PRD-6668815a4-427e2463&siteid=0&version=967&QueryKeywords=" + comic + "%20comic&AvailableItemsOnly=true&MaxEntries=10";
+	var queryURL = "http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&appid=BrandenH-MarvelSi-PRD-6668815a4-427e2463&siteid=0&version=967&QueryKeywords=" + comic + "%20comic&AvailableItemsOnly=true&MaxEntries=10";
 
 	$.ajaxPrefilter( function (options) {
 		if (options.crossDomain && jQuery.support.cors) {
@@ -15,14 +15,16 @@ $("#find-comic").on("click", function (event) {
 	$.ajax({
 		url: queryURL,
 		method: "GET",
+	
+	
 		
 	})
-		.then(function (callback) {
+		.then(function (response) {
 
-			var hotmess = $("<p>").text(callback.Timestamp);
-			console.log(callback.Product[0]);
+			var parseresponse = JSON.parse(response)
+
+			var hotmess = $("<p>").text(parseresponse.Product[1].DetailsURL);
+			console.log(parseresponse);
 			$("#hotmessdisplay").prepend(hotmess);
-			console.log(callback);
 		});
 });
-
