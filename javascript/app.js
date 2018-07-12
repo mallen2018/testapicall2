@@ -2,7 +2,7 @@ $("#find-comic").on("click", function (event) {
 
 	event.preventDefault();
 	var comic = $("#searchTerm").val().trim();
-	var queryURL = "http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&appid=BrandenH-MarvelSi-PRD-6668815a4-427e2463&siteid=0&version=967&QueryKeywords=" + comic + "%20comic&AvailableItemsOnly=true&MaxEntries=10";
+	var queryURL = "http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&appid=BrandenH-MarvelSi-PRD-6668815a4-427e2463&siteid=0&version=967&QueryKeywords=" + comic + "&AvailableItemsOnly=true&MaxEntries=10";
 
 	$.ajaxPrefilter( function (options) {
 		if (options.crossDomain && jQuery.support.cors) {
@@ -15,25 +15,45 @@ $("#find-comic").on("click", function (event) {
 	$.ajax({
 		url: queryURL,
 		method: "GET",
-	
-	
 		
 	})
-		.then(function (response) {
+	.then(function (response) {
 
-			var parseresponse = JSON.parse(response)
+		var parseresponse = JSON.parse(response)
 
-			var hotmess = (parseresponse.Product[1].DetailsURL);
-			console.log(parseresponse);
-			console.log(hotmess);
-			$("#hotmessdisplay").prepend(hotmess);
-			$("#hotmessdisplay").attr("href",hotmess);
+		var hotmess = (parseresponse.Product[0].DetailsURL);
+		console.log(parseresponse);
+		console.log(hotmess);
+		$("#hotmessdisplay").prepend(hotmess);
+		$("#hotmessdisplay").attr("href",hotmess);
 
-			$("#hotmessdisplay").on("click", function(){
-				var href = $(this).find('a').attr('href');
-			});
-
+		$("#hotmessdisplay").on("click", function(){
+			var href = $(this).find('a').attr('href');
 		});
-	});
 
+
+		var queryURL = "https://www.omdbapi.com/?t=" + comic + "&y=&plot=short&apikey=trilogy";
 		
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+
+		  }).then(function(response) {
+			  console.log(response)
+			var movieDiv = $("<div class='movie'>");
+			var rating = response.Rated;
+			var pOne = $("<p>").text("Rating: " + rating);
+			movieDiv.append(pOne);
+			var released = response.Released;
+			var pTwo = $("<p>").text("Released: " + released);
+			movieDiv.append(pTwo);
+			var plot = response.Plot;
+			var pThree = $("<p>").text("Plot: " + plot);
+			movieDiv.append(pThree);
+			var imgURL = response.Poster;
+			var image = $("<img>").attr("src", imgURL);
+			movieDiv.append(image);
+			$("#movies-view").prepend(movieDiv);
+});
+});
+});
