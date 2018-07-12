@@ -2,7 +2,7 @@ $("#find-comic").on("click", function (event) {
 
 	event.preventDefault();
 	var comic = $("#searchTerm").val().trim();
-	var queryURL = "http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&appid=BrandenH-MarvelSi-PRD-6668815a4-427e2463&siteid=0&version=967&QueryKeywords=" + comic + "&AvailableItemsOnly=true&MaxEntries=10";
+	var queryURL = "http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=JSON&appid=BrandenH-MarvelSi-PRD-6668815a4-427e2463&siteid=0&version=967&QueryKeywords=" + comic + "%20comic&%20books&AvailableItemsOnly=true&MaxEntries=10";
 
 	$.ajaxPrefilter( function (options) {
 		if (options.crossDomain && jQuery.support.cors) {
@@ -21,7 +21,7 @@ $("#find-comic").on("click", function (event) {
 
 		var parseresponse = JSON.parse(response)
 
-		var hotmess = (parseresponse.Product[0].DetailsURL);
+		var hotmess = (parseresponse.Product[1].DetailsURL);
 		console.log(parseresponse);
 		console.log(hotmess);
 		$("#hotmessdisplay").prepend(hotmess);
@@ -41,6 +41,15 @@ $("#find-comic").on("click", function (event) {
 		  }).then(function(response) {
 			  console.log(response)
 			var movieDiv = $("<div class='movie'>");
+			var year = response.Year;
+			var psix = $("<p>").text("Year: " + year);
+			movieDiv.append(psix);
+			var title = response.Title;
+			var pfive = $("<p>").text("Title: " + title);
+			movieDiv.append(pfive);
+			var imbdrating = response.imdbRating;
+			var pfour = $("<p>").text("IMDBRating: " + imbdrating);
+			movieDiv.append(pfour);
 			var rating = response.Rated;
 			var pOne = $("<p>").text("Rating: " + rating);
 			movieDiv.append(pOne);
