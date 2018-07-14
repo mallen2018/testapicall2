@@ -1,3 +1,29 @@
+var config = {
+	apiKey: "AIzaSyAYJ4cYQbpAscE0gUBbbUKK5BB1OWlMR6w",
+	authDomain: "comic-grab.firebaseapp.com",
+	databaseURL: "https://comic-grab.firebaseio.com",
+	projectId: "comic-grab",
+	storageBucket: "comic-grab.appspot.com",
+	messagingSenderId: "849306899331"
+  };
+
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var name = "";
+  $("#searchTerm").on("click", function() {
+  event.preventDefault();
+
+  name = $("#searchTerm").val().trim();
+
+  database.ref().push({
+  character: name,
+  });
+  
+});
+
+database.ref().on("value", function(snapshot) {
+
 $("#find-comic").on("click", function (event) {
 
 	event.preventDefault();
@@ -24,14 +50,15 @@ $("#find-comic").on("click", function (event) {
 		var hotmess = (parseresponse.Product[1].DetailsURL);
 		console.log(parseresponse);
 		console.log(hotmess);
+
 		$("#hotmessdisplay").prepend(hotmess);
 		$("#hotmessdisplay").attr("href",hotmess);
 
 		$("#hotmessdisplay").on("click", function(){
-			var href = $(this).find('a').attr('href');
+		var href = $(this).find('a').attr('href');
+	
 		});
-
-
+	
 		var queryURL = "https://www.omdbapi.com/?t=" + comic + "&y=&plot=short&apikey=trilogy";
 		
 		$.ajax({
@@ -40,7 +67,7 @@ $("#find-comic").on("click", function (event) {
 
 		  }).then(function(response) {
 			  console.log(response)
-			var movieDiv = $("<div class='movie'>");
+			var movieDiv = $("<div id='comic-view'>");
 			var year = response.Year;
 			var psix = $("<p>").text("Year: " + year);
 			movieDiv.append(psix);
@@ -62,7 +89,9 @@ $("#find-comic").on("click", function (event) {
 			var imgURL = response.Poster;
 			var image = $("<img>").attr("src", imgURL);
 			movieDiv.append(image);
-			$("#movies-view").prepend(movieDiv);
+			$("#comic-view").prepend(movieDiv);
+
+});
 });
 });
 });

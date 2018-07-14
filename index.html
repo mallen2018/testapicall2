@@ -9,10 +9,11 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+	<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 </head>
 
 <body>
-	<header>
+	<header>	
 
 		<div id="banner">
 			<marquee behavior="scroll" direction="left">Welcome to the Comic-Grab Search Page</marquee>
@@ -44,21 +45,46 @@
 			<div class="row">
 
 				<div class="left-col col-md-6">
-				<div id="movies-view"></div>
-				<form id="movie-form">		
-						<br>
+					<div id="comic-view"></div>
 				</div>
 
-				<div class="right-col col-md-6" >
+				<div id="hotmess" class="right-col col-md-6">
 					<a id="hotmessdisplay" href="#hotmessdisplay" target="_blank"></a>
-					
-				</div> 
-			
+				</div>
+
+			</div>
+		</div>
+
+		<br>
+		<br>
+
+
+		<div class="container" id="searched-table">
+			<div class="card">
+				<h2 class="card-header" style="color: white;">Previously Searched:</h2>
+				<div class="card-body">
+
+					<table class="table" id="comic-table">
+
+					<table class="table">
+
+						<thead>
+							<tr id="tr">
+								<th scope="col">Name:</th>
+								<th scope="col">Comic Listing:</th>
+								<th scope="col">eBay Link:</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+						<br>
+					</table>
+				</div>
 			</div>
 		</div>
 
 	</main>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="javascript/app.js"></script>
 
